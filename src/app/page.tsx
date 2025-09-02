@@ -29,7 +29,7 @@ type User = {
 export default function Home() {
   const [user, setUser] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const currentPage = 1
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const itemsPerPage = 5
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function Home() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexofFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = user.slice(indexofFirstItem, indexOfLastItem);
-  console.log(currentItems);
+
 
   if (loading) return <div>Loading...</div>
   return (
@@ -70,9 +70,17 @@ export default function Home() {
           }
         </ul>
         {/* pagination buttons */}
-        
-        <div className="flex gap-2 mt-4">
 
+        <div className="flex gap-2 mt-4">
+          {Array.from({ length: Math.ceil(user.length / itemsPerPage) }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-3 py-1 border ${currentPage === i + 1 ? 'bg-blue-500 text-white' : ''}`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       </div>
     </>
