@@ -62,25 +62,41 @@ export default function Home() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexofFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredUsers.slice(indexofFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   if (loading) return <div>Loading...</div>
   return (
     <>
       <div className="container mx-auto p-4">
+        {/* <ThreeDElement /> */}
         <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <Taible currentItems={currentItems} title="User List"/>
+        <Taible currentItems={currentItems}/>
         {/* pagination buttons */}
 
-        <div className="flex gap-2 mt-4">
-          {Array.from({ length: Math.ceil(filteredUsers.length / itemsPerPage) }, (_, i) => (
+        <div className="flex justify-center items-center gap-2 mt-8">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 border ${currentPage === i + 1 ? 'bg-blue-500 text-white' : ''}`}
+              className={`px-4 py-2 rounded-md ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               {i + 1}
             </button>
           ))}
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
         </div>
       </div>
     </>

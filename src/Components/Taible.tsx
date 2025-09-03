@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 type User = {
   id: number;
@@ -28,32 +28,17 @@ type User = {
 
 type TableProps = {
   currentItems: User[];
-  title: string;
 };
 
-export default function Taible({ currentItems, title }: TableProps) {
-  const tableRef = useRef<HTMLTableElement>(null);
-
-  useEffect(() => {
-    if (tableRef.current) {
-      const tableRows = tableRef.current.querySelectorAll('tbody tr');
-      gsap.fromTo(
-        tableRows,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'power3.out',
-        }
-      );
-    }
-  }, [currentItems]);
-
+export default function Taible({ currentItems }: TableProps) {
   return (
     <div className="overflow-x-auto shadow-lg rounded-lg">
-      <table ref={tableRef} className="min-w-full bg-white">
+      <motion.table
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="min-w-full bg-white"
+      >
         <thead className="bg-gray-800 text-white">
           <tr>
             <th className="w-1/5 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
@@ -64,8 +49,14 @@ export default function Taible({ currentItems, title }: TableProps) {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {currentItems.map((user) => (
-            <tr key={user.id} className="hover:bg-gray-100 transition-colors duration-200">
+          {currentItems.map((user, index) => (
+            <motion.tr
+              key={user.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="hover:bg-gray-100 transition-colors duration-200"
+            >
               <td className="px-6 py-4 whitespace-nowrap">
                 <Link href={`/user/${user.id}`} className="text-blue-600 hover:underline">
                   {user.name}
@@ -75,7 +66,7 @@ export default function Taible({ currentItems, title }: TableProps) {
               <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.address.city}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.company.name}</td>
-            </tr>
+            </motion.tr>
           ))}
           {currentItems.length === 0 && (
             <tr>
@@ -85,7 +76,7 @@ export default function Taible({ currentItems, title }: TableProps) {
             </tr>
           )}
         </tbody>
-      </table>
+      </motion.table>
     </div>
   );
 }
