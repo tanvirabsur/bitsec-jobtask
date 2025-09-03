@@ -1,0 +1,28 @@
+Frontend Task
+Deadline: 4th September 00:00 BDT
+Clone this project using NextJS or Remix with Typescript
+https://dashboard-app-sooty-theta.vercel.app/
+Here is the API: JSONPlaceholder
+
+Summary:
+Build a Dashboard application.
+Create a User List Page.
+Fetch user data from an API.
+Display the data in a list.
+Add a Search Feature.
+Allow users to be filtered by name or email.
+Add Pagination.
+Limit the number of users displayed per page.
+Create a User Details Page.
+Open when clicking on a user’s name or row.
+Display detailed information about the selected user.
+Ensure navigation between the User List Page and User Details Page.
+Ensure Responsive Design.
+The app should work well on both mobile and desktop devices.
+
+You have to add animation to this project using your creativity, and adding 3D elements will be your plus points. You can use Framer Motion, GSAP, or Three.js for this animation.
+
+This project needs to be hosted live with a GitHub repo.
+
+Email us after completing your task
+

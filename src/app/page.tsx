@@ -1,4 +1,6 @@
 "use client";
+import SearchInput from "@/Components/SearchInput";
+import Taible from "@/Components/Taible";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -30,6 +32,7 @@ export default function Home() {
   const [user, setUser] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [searchQuery, setSearchQuery] = useState<string>("")
   const itemsPerPage = 5
 
   useEffect(() => {
@@ -50,29 +53,26 @@ export default function Home() {
 
   }, [])
 
-
-
-  // pagination logic 
-
+  // search and pagination logic
+  const filteredUsers = user.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexofFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = user.slice(indexofFirstItem, indexOfLastItem);
-
+  const currentItems = filteredUsers.slice(indexofFirstItem, indexOfLastItem);
 
   if (loading) return <div>Loading...</div>
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">User List</h1>
-        <ul className="space-y-4">
-          {
-            currentItems.map(user => <li key={user.id}>{user.name}</li>)
-          }
-        </ul>
+        <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <Taible currentItems={currentItems} title="User List"/>
         {/* pagination buttons */}
 
         <div className="flex gap-2 mt-4">
-          {Array.from({ length: Math.ceil(user.length / itemsPerPage) }, (_, i) => (
+          {Array.from({ length: Math.ceil(filteredUsers.length / itemsPerPage) }, (_, i) => (
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
