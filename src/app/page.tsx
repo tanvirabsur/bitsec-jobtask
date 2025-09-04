@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/Components/Loading";
 import SearchInput from "@/Components/SearchInput";
 import Taible from "@/Components/Taible";
 import axios from "axios";
@@ -41,7 +42,7 @@ export default function Home() {
       try {
         setLoading(true)
         const { data } = await axios.get('https://jsonplaceholder.typicode.com/users')
-        console.log(data);
+       
         setUser(data)
       } catch (err) {
         console.log(err);
@@ -64,7 +65,7 @@ export default function Home() {
   const currentItems = filteredUsers.slice(indexofFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <Loading/>
   return (
     <>
       <div className="container mx-auto p-4">
