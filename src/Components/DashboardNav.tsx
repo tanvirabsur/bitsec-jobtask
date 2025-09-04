@@ -29,7 +29,7 @@ export default function DashboardNav() {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        {/* <div className="flex items-center gap-3">
                             <div className="hidden sm:flex items-center gap-2">
                                 <input type="text" placeholder="Search" className="input input-sm input-bordered" />
                             </div>
@@ -40,10 +40,10 @@ export default function DashboardNav() {
                                 </svg>
                             </button>
 
-                            {/* <div className="avatar">
+                            <div className="avatar">
                                 <div className="w-9 h-9 rounded-full bg-primary text-primary-content flex items-center justify-center">U</div>
-                            </div> */}
-                        </div>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </header>

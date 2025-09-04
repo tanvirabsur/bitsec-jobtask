@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { gsap } from 'gsap';
+import Link from 'next/link';
+import Loading from '@/Components/Loading';
 
 type User = {
     id: number;
@@ -66,7 +68,7 @@ export default function UserDetails() {
         }
     }, [user]);
 
-    if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    if (loading) return <Loading/>
     if (!user) return <div className="flex justify-center items-center h-screen">User not found</div>;
 
     return (
@@ -88,7 +90,9 @@ export default function UserDetails() {
                             <p className="text-gray-700 mb-2"><strong>Company:</strong> {user.company.name}</p>
                             <p className="text-gray-700"><strong>Address:</strong> {`${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}`}</p>
                         </div>
+                        
                     </div>
+                    <Link href={'/'} className='btn bg-blue-500 text-white rounded mt-2'>back to dashboard</Link>
                 </div>
             </div>
         </div>
